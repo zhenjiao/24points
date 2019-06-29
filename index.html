@@ -1,0 +1,101 @@
+<html>
+<head>
+<script>
+    function calc24() {
+        var val1 = document.getElementsByName("val1").value;
+        var val2 = document.getElementsByName("val2").value;
+        var val3 = document.getElementsByName("val1").value;
+        var val4 = document.getElementsByName("val2").value;
+        var nums = new Array();
+        var texts = new Array();
+        nums[0] = parseInt(val1);
+        nums[1] = parseInt(val2);
+        nums[2] = parseInt(val3);
+        nums[3] = parseInt(val4);
+        texts[0] = val1;
+        texts[1] = val2;
+        texts[2] = val3;
+        texts[3] = val4;
+        findResult(nums, texts, res);
+        printResult(res);
+    }
+    function printResult(res) {
+        for (var i = 0; i < res.length; i++) {
+            var s = "<p>" + res[i] + "</p>";
+        }
+        document.getElementsByName("result").innerHTML = s;
+    }
+    function findResult(nums, texts, res) {
+        n = nums.length;
+        if (n == 1 && nums[0] >= 23.99 && nums[0] <= 24.001) {
+            res.push(texts[0]);
+            return;
+        }
+        for (var i = 0; i < n - 1; i++) {
+            for (var j = i + 1; j < n; j++) {
+                nums2 = nums.slice();
+                nums2.splice(j, 1);
+                nums2.splice(i, 1);
+                texts2 = texts.slice();
+                texts2.splice(j, 1);
+                texts2.splice(i, 1);
+                nums2.push(nums[i] + nums[j]);
+                var s = "(" + texts[i] + "+" + texts[j] + ")";
+                texts2.push(s);
+                findResult(nums2, texts2, res);
+                nums2.pop();
+                texts2.pop();
+                nums2.push(nums[i] - nums[j]);
+                var s = "(" + texts[i] + "-" + texts[j] + ")";
+                texts2.push(s);
+                findResult(nums2, texts2, res);
+                nums2.pop();
+                texts2.pop();
+                nums2.push(nums[i] * nums[j]);
+                var s = "(" + texts[i] + "*" + texts[j] + ")";
+                texts2.push(s);
+                findResult(nums2, texts2, res);
+                nums2.pop();
+                texts2.pop();
+                nums2.push(nums[i] / nums[j]);
+                var s = "(" + texts[i] + "/" + texts[j] + ")";
+                texts2.push(s);
+                findResult(nums2, texts2, res);
+                nums2.pop();
+                texts2.pop();
+                nums2.push(nums[j] - nums[i]);
+                var s = "(" + texts[j] + "-" + texts[i] + ")";
+                texts2.push(s);
+                findResult(nums2, texts2, res);
+                nums2.pop();
+                texts2.pop();
+                nums2.push(nums[j] / nums[i]);
+                var s = "(" + texts[j] + "/" + texts[i] + ")";
+                texts2.push(s);
+                findResult(nums2, texts2, res);
+            }
+        }
+
+    }
+</script>
+</head>
+<body>
+<div class="row">
+    <div class="col-md-3">
+        <input type="text" name="val1" />
+    </div>
+    <div class="col-md-3">
+        <input type="text" name="val2" />
+    </div>
+    <div class="col-md-3">
+        <input type="text" name="val3" />
+    </div>
+    <div class="col-md-3">
+        <input type="text" name="val4" />
+    </div>
+    <input type="button" onclick="calc24()" value="Run" />
+    <div name="result">
+    </div>
+</div>
+</body>
+</html>
